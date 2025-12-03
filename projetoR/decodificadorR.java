@@ -1,19 +1,24 @@
 import java.util.Scanner;
 
-//Testes pra ler as cores e colocar elas num array(não deu certo mas é uma ideia, só me falta saber oq tem fazer pra isso)
-/* decodificadorR.java:9: error: incompatible types: String cannot be converted to String[]
-        cores = sc.nextLine();
-                           ^
-1 error */
+//Testes pra ler as cores e colocar elas num array
+
+
 public class decodificadorR{
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
 
-        String[] cores = new String[6];
-        cores = sc.nextLine();
-
-        for(int i = 0; i < cores.length; i++){
-            System.out.println("Cor " + i + ": " + cores[i]);
+        // cores recebe a linha inteira
+        String cores = sc.nextLine();
+        //o array cores1 recebe os valores digitados em cores já separados, trampo do "cores.split(" ")" que dividiu por espaços na entrada do usuario 
+        String[] cores1 = cores.split(" ");
+        
+        
+        //lista todas as cores e suas posições no array cores1
+        for(int i = 0; i < cores1.length; i++){
+            System.out.println("Cor " + i + ": " + cores1[i]);
         }
+        
+        //teste pra pegar uma específica
+        System.out.println(cores1[2]);
     }
 }
