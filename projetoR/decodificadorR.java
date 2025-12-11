@@ -12,13 +12,11 @@ public class decodificadorR{
         //o array cores1 recebe os valores digitados em cores já separados, trampo do "cores.split(" ")" que dividiu por espaços na entrada do usuario 
         String[] cores1 = cores.split(" ");
         
-        
+        while(sc.hasNextLine()){
         //lista todas as cores e suas posições no array cores1
-        for(int i = 0; i < cores1.length; i++){
+        for(int i = 0; i <= cores1.length; i++){
             System.out.println("Cor " + i + ": " + cores1[i]);
         }
-        
-        //teste pra pegar uma específica
-        System.out.println(cores1[2]);
+    }
     }
 }
