@@ -21,7 +21,6 @@ public class entradaUsuario{
 
         //I. Recebe valor do usuário no terminal
         else if (argumento.equalsIgnoreCase("I")){ {
-            System.out.println(executarI)
             System.out.println("Digite as cores presentes no seu resistor");
             String[] cores = new String[6]; //cria um vetor de strings de tamanho máximo de cores que um resistor pode ter
             
