@@ -20,7 +20,7 @@ public class DecodificadorResistor{
         }
 
         //I. Recebe valor do usuário no terminal
-        else if (argumento.equalsIgnoreCase("I")){ {
+        else if (argumento.equalsIgnoreCase("I")) {
             System.out.println("Digite as cores presentes no seu resistor");
             String[] coresResistor = new String[6]; //cria um vetor de strings de tamanho máximo de cores que um resistor pode ter
             
@@ -43,6 +43,7 @@ public class DecodificadorResistor{
            //Se o resistor for menor que 4, é invalido
            if (tamanhoResistor<4){
                 System.out.println("Tamanho de resistor inválido. Este deve conter entre 4 e 6 cores");
+                sc.close();
                 return;
            }
 
@@ -59,12 +60,12 @@ public class DecodificadorResistor{
                     return;
                 }
            }
-           }
         }
         
         sc.close();
     
-        }
+    }
+
 
     static double encontrarValorDigitos (String cor) {
         switch (cor.trim().toUpperCase()) { // funciona escrevendo vermelho ou VERMELHO
@@ -107,7 +108,6 @@ public class DecodificadorResistor{
             case "AMARELO": return 25;
             default: return Double.NaN; // valor inválido
         }
-    
     }
 }
 
