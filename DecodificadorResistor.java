@@ -103,6 +103,13 @@ public class DecodificadorResistor{
 
                //O valor do multiplicador não passa do expoente, de uma notação científica
                valor *= Math.pow(10, multiplicador);
+
+               
+
+
+
+
+
                System.out.printf("Seu resistor tem: %.2f Ohms (+- %.2f%%)\n", valor, tolerancia);
 
                //Se o resistor tem 6 cores, ele tem um coeficiente de temperatura
@@ -175,6 +182,18 @@ public class DecodificadorResistor{
             case "AMARELO": return 25;
             default: return Double.NaN; // valor inválido
         }
+    }
+
+    static String diminuirNumero (double valor) {
+        String numString;
+
+        //Se o valor for divisivel por milh
+        if (valor%1000000==0) {
+            valor /= 1000000;
+            numString = String.format("%0f, M", valor);
+            return numString;
+        }
+        i
     }
 }
 
