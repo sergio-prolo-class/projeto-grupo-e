@@ -32,8 +32,10 @@ public class decodificadorR{
             } else if (cores1.length == 6){
                 valoresSeisFaixas(cores1);
                 System.out.printf("%.2f ohms, %s de tolerancia e %s de coeficiente de temperatura", (digitosT5 * faixa4), faixa5, faixa6);
+            } else if (faixa1 == 99 || faixa2 == 99 || faixa3 == 99 || faixa4 == 99 || faixa5.equals("Cor Inválida para a posição") || faixa6.equals("Cor Inválida para a posição")){
+                System.out.print("Cor Inválida");
             } else {
-                System.out.printf("Numero de faixas invalido");
+                System.out.print("Número inválido de faixas");
             }
 
             System.out.println();
@@ -42,15 +44,6 @@ public class decodificadorR{
     sc.close();
 
     }
-
-
-
-
-
-
-
-
-
 
         static void valoresQuatroFaixas(String cores1[]){
 
@@ -74,7 +67,8 @@ public class decodificadorR{
                     faixa1 = 8;
                 } else if(cores1[0].equals("branco")){
                     faixa1 = 9;
-                } 
+                } else
+                    faixa1 = 99;
 
                 if(cores1[1].equals("preto")){
                     faixa2 = 0; 
@@ -96,7 +90,8 @@ public class decodificadorR{
                     faixa2 = 8;
                 } else if(cores1[1].equals("branco")){
                     faixa2 = 9;
-                } 
+                } else 
+                    faixa2 = 99;
 
                 if(cores1[2].equals("prata")){
                     faixa4 = 0.01; 
@@ -118,7 +113,8 @@ public class decodificadorR{
                     faixa4 = 1000000;
                 } else if(cores1[2].equals("roxo")){
                     faixa4 = 10000000;
-                } 
+                } else
+                    faixa4 = 99;
 
                 if(cores1[3].equals("prata")){
                     faixa5 = "10%"; 
@@ -136,7 +132,8 @@ public class decodificadorR{
                     faixa5 = "0.1%";
                 } else if(cores1[3].equals("cinza")){
                     faixa5 = "0.05%";
-                } 
+                } else 
+                    faixa5 = "Cor Inválida para a posição";
 
                 digitosT4 = (faixa1 * 10) + faixa2;
             }
@@ -165,7 +162,8 @@ public class decodificadorR{
                     faixa1 = 8;
                 } else if(cores1[0].equals("branco")){
                     faixa1 = 9;
-                } 
+                } else
+                    faixa1 = 99;
 
                 if(cores1[1].equals("preto")){
                     faixa2 = 0; 
@@ -187,7 +185,8 @@ public class decodificadorR{
                     faixa2 = 8;
                 } else if(cores1[1].equals("branco")){
                     faixa2 = 9;
-                } 
+                } else 
+                    faixa2 = 99;
 
                 if(cores1[2].equals("preto")){
                     faixa3 = 0; 
@@ -209,7 +208,8 @@ public class decodificadorR{
                     faixa3 = 8;
                 } else if(cores1[2].equals("branco")){
                     faixa3 = 9;
-                } 
+                } else
+                    faixa3 = 99;
 
                 if(cores1[3].equals("prata")){
                     faixa4 = 0.01; 
@@ -231,7 +231,8 @@ public class decodificadorR{
                     faixa4 = 1000000;
                 } else if(cores1[3].equals("roxo")){
                     faixa4 = 10000000;
-                } 
+                } else
+                    faixa4 = 99;
 
                 if(cores1[4].equals("prata")){
                     faixa5 = "10%"; 
@@ -249,7 +250,8 @@ public class decodificadorR{
                     faixa5 = "0.1%";
                 } else if(cores1[4].equals("cinza")){
                     faixa5 = "0.05%";
-                } 
+                } else 
+                    faixa5 = "Cor Inválida para a posição";
 
                 digitosT5 = (faixa1 * 100) + (faixa2 * 10) + faixa3;
             }
@@ -277,7 +279,9 @@ public class decodificadorR{
                     faixa1 = 8;
                 } else if(cores1[0].equals("branco")){
                     faixa1 = 9;
-                } 
+                } else
+                    faixa1 = 99;  
+                
 
                 if(cores1[1].equals("preto")){
                     faixa2 = 0; 
@@ -299,7 +303,8 @@ public class decodificadorR{
                     faixa2 = 8;
                 } else if(cores1[1].equals("branco")){
                     faixa2 = 9;
-                } 
+                } else 
+                    faixa2 = 99;
 
                 if(cores1[2].equals("preto")){
                     faixa3 = 0; 
@@ -321,7 +326,8 @@ public class decodificadorR{
                     faixa3 = 8;
                 } else if(cores1[2].equals("branco")){
                     faixa3 = 9;
-                } 
+                } else
+                    faixa3 = 99;
 
                 if(cores1[3].equals("prata")){
                     faixa4 = 0.01; 
@@ -343,7 +349,8 @@ public class decodificadorR{
                     faixa4 = 1000000;
                 } else if(cores1[3].equals("roxo")){
                     faixa4 = 10000000;
-                } 
+                } else
+                    faixa4 = 99;
 
                 if(cores1[4].equals("prata")){
                     faixa5 = "10%"; 
@@ -361,7 +368,8 @@ public class decodificadorR{
                     faixa5 = "0.1%";
                 } else if(cores1[4].equals("cinza")){
                     faixa5 = "0.05%";
-                } 
+                } else 
+                    faixa5 = "Cor Inválida para a posição";
 
                 if(cores1[5].equals("marrom")){
                     faixa6 = "100ppm/K"; 
@@ -371,7 +379,8 @@ public class decodificadorR{
                     faixa6 = "15ppm/K";
                 } else if(cores1[5].equals("amarelo")){
                     faixa6 = "25ppm/K";
-                }
+                } else 
+                    faixa6 = "Cor Inválida para a posição";
 
                 digitosT5 = (faixa1 * 100) + (faixa2 * 10) + faixa3;
             }
