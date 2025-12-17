@@ -124,18 +124,66 @@ public class DecodificadorResistor{
         }
 
         else if (argumento.equalsIgnoreCase("F")){
-            /*
-            VOCÊ
-            TRABALHA
-            AQUI 
-            RAUL
+            while(sc.hasNextLine()){
+                String linha = sc.nextLine();
 
-            OBRIGADO
-            BOM TRABALHO
-            E BOA SORTE
-            
-            
-            */
+                if (linha.trim().isEmpty()) continue; // pula linhas vazias
+                
+                String[] coresResistor = linha.split(" ");
+                int tamanhoResistor = coresResistor.length;
+                
+                // Se o resistor for menor que 4 ou maior que 6, é invalido
+                if (tamanhoResistor < 4 || tamanhoResistor > 6){
+                    System.out.println("Tamanho de resistor inválido. Este deve conter entre 4 e 6 cores");
+                    continue;
+                }
+                
+                int numDigits = (tamanhoResistor == 4) ? 2 : 3;
+                double[] digitos = new double[numDigits];
+                boolean invalido = false;
+                
+                for(int i = 0; i < numDigits; i++){
+                    digitos[i] = encontrarValorDigitos(coresResistor[i]);
+                    if(digitos[i] < 0 || Double.isNaN(digitos[i])){
+                        invalido = true;
+                    }
+                }
+                
+                if(invalido){
+                    System.out.println("Nome de cor inválido para dígitos. Tente preto, marrom, vermelho, laranja, amarelo, verde, azul, violeta, cinza ou branco");
+                    continue;
+                }
+                
+                double multiplicador = encontrarValorDigitos(coresResistor[numDigits]);
+                if(Double.isNaN(multiplicador)){
+                    System.out.println("Nome de cor inválido para multiplicador");
+                    continue;
+                }
+                
+                double tolerancia = calculoTolerancia(coresResistor[numDigits + 1]);
+                if(Double.isNaN(tolerancia)){
+                    System.out.println("Nome de cor inválido para tolerância");
+                    continue;
+                }
+                
+                double valor = 0;
+                for(int i = 0; i < numDigits; i++){
+                    valor += digitos[i] * Math.pow(10, numDigits - 1 - i);
+                }
+                
+                valor *= Math.pow(10, multiplicador);
+                
+                System.out.printf("Seu resistor tem: %s Ohms (+- %.2f%%)\n", formatarNumero(valor), tolerancia);
+                
+                if(tamanhoResistor == 6){
+                    double coefTemp = coeficienteDeTemperatura(coresResistor[5]);
+                    if(!Double.isNaN(coefTemp)){
+                        System.out.printf("Coeficiente de temperatura: %.0f ppm/K\n", coefTemp);
+                    } else {
+                        System.out.println("Nome de cor inválido para coeficiente de temperatura");
+                    }
+                }
+            }
         }
         
         sc.close();
@@ -158,7 +206,9 @@ public class DecodificadorResistor{
             case "AMARELO": return 4;
             case "VERDE" : return 5;
             case "AZUL" : return 6;
-            case "VIOLETA" : return 7;
+            case "VIOLETA" : 
+            case "ROXO" :
+                return 7;
             case "CINZA" : return 8;
             case "BRANCO" : return 9;
             default: return Double.NaN; // valor inválido
