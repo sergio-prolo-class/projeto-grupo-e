@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class DecodificadorResistor{
@@ -123,24 +124,85 @@ public class DecodificadorResistor{
            }
         }
 
-        else if (argumento.equalsIgnoreCase("F")){
-            /*
-            VOCÊ
-            TRABALHA
-            AQUI 
-            RAUL
+// F -> ler de arquivo (cada linha:  4, 5 ou 6 cores separadas por espaço)
+    else if (argumento.equalsIgnoreCase("F")){
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine().trim();
+            if (line. isEmpty()) {
+                continue;
+            }
 
-            OBRIGADO
-            BOM TRABALHO
-            E BOA SORTE
+            String[] cores = line.split("\\s+");
             
-            
-            */
+            // Validar quantidade de faixas (4, 5 ou 6)
+            if (cores.length < 4 || cores.length > 6) {
+                System.out.println("Número inválido de faixas");
+                continue;
+            }
+
+            // Determinar número de dígitos baseado na quantidade de faixas
+            int numDigits = (cores.length == 4) ? 2 : 3;
+
+            // Validar e extrair dígitos
+            double[] digitos = new double[numDigits];
+            boolean invalido = false;
+            for (int i = 0; i < numDigits; i++) {
+                digitos[i] = encontrarValorDigitos(cores[i]);
+                if (Double.isNaN(digitos[i])) {
+                    invalido = true;
+                    break;
+                }
+            }
+
+            if (invalido) {
+                System.out.println("Cor Inválida");
+                continue;
+            }
+
+            // Extrair multiplicador
+            double multiplicador = encontrarValorDigitos(cores[numDigits]);
+            if (Double. isNaN(multiplicador)) {
+                System.out.println("Cor Inválida");
+                continue;
+            }
+
+            // Extrair tolerância
+            double tolerancia = calculoTolerancia(cores[numDigits + 1]);
+            if (Double.isNaN(tolerancia)) {
+                System. out.println("Cor Inválida");
+                continue;
+            }
+
+            // Calcular valor do resistor
+            double valor = 0;
+            for (int i = 0; i < numDigits; i++) {
+                valor += digitos[i] * Math.pow(10, numDigits - 1 - i);
+            }
+            valor *= Math.pow(10, multiplicador);
+
+            // Formata a tolerância para string (ex: "5%", "0.5%")
+            String tolStr = formatarTolerancia(tolerancia);
+
+            // Se tiver 6 faixas, extrair coeficiente de temperatura
+            if (cores.length == 6) {
+                double coefTemp = coeficienteDeTemperatura(cores[5]);
+                if (Double.isNaN(coefTemp)) {
+                    System. out.println("Cor Inválida");
+                    continue;
+                }
+                // Saída para 6 faixas
+                System.out.printf("%.2f ohms, %s de tolerancia e %.0fppm/K de coeficiente de temperatura\n", 
+                    valor, tolStr, coefTemp);
+            } else {
+                // Saída para 4 ou 5 faixas
+                System.out.printf("%.2f ohms e %s de tolerancia\n", valor, tolStr);
+            }
         }
-        
-        sc.close();
-    
     }
+    
+    sc.close();
+
+}
 
 
     static double encontrarValorDigitos (String cor) {
@@ -223,6 +285,20 @@ public class DecodificadorResistor{
                 numString = String.format("%.1f", valor);
             }
             return numString;
+        }
+    }
+
+    // Formata tolerância para string sem zeros desnecessários (ex: "5%" ou "0.5%")
+    static String formatarTolerancia(double tolerancia) {
+        if (Double.isNaN(tolerancia)) return "Cor Inválida";
+        if (Math.abs(tolerancia - Math.round(tolerancia)) < 1e-9) {
+        // inteiro
+            return String.format("%.0f%%", tolerancia);
+        } 
+        else {
+        // com casas decimais (até 2 casas)
+        DecimalFormat df = new DecimalFormat("#.##");
+        return df.format(tolerancia) + "%";
         }
     }
 }
